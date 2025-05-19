@@ -2,19 +2,43 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>PokeAPI EC2</title>
+    <title>Microservicios Distribuidos</title>
+    <style>
+        body { text-align: center; padding-top: 50px; }
+        a.button, button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        a.button:hover, button:hover {
+            background-color: #2980b9;
+        }
+        #resultado { margin-top: 30px; }
+        #resultado img { margin-top: 10px; width: 150px; }
+    </style>
 </head>
 <body>
-    <h1>Consulta de Pokémon</h1>
-    <form onsubmit="consultarPokemon(event)">
-        <input type="text" id="nombre" placeholder="Nombre del Pokémon" required>
-        <button type="submit">Buscar</button>
-    </form>
+    <h1>Microservicios Distribuidos</h1>
+    <a class="button" href="https://heroku-hora-96908fd09f4d.herokuapp.com/">(Heroku)</a>
+    <a class="button" href="https://hello01-app-ljyz4.ondigitalocean.app/">(DigitalOcean)</a>
+    <a class="button" href="https://web-production-ce50.up.railway.app/">(Railway)</a>
+    <a class="button" href="https://hello01-git-main-diego7118s-projects.vercel.app/">(Vercel)</a>
+
+    <br><br>
+
+    <input type="text" id="nombre" placeholder="Nombre del Pokémon">
+    <button onclick="consultarPokemon()">Pokémon (EC2)</button>
     <div id="resultado"></div>
 
     <script>
-        function consultarPokemon(event) {
-            event.preventDefault();
+        function consultarPokemon() {
             const nombre = document.getElementById("nombre").value;
             fetch(`/pokemon?nombre=${nombre}`)
                 .then(response => response.json())
@@ -29,9 +53,6 @@
                             <img src="${data.imagen}" alt="${data.nombre}">
                         `;
                     }
-                })
-                .catch(error => {
-                    document.getElementById("resultado").innerHTML = "Error al consultar el Pokémon";
                 });
         }
     </script>
