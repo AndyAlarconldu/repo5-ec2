@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PokeAPI EC2</title>
+</head>
+<body>
+    <h1>Consulta de Pokémon</h1>
+    <form onsubmit="consultarPokemon(event)">
+        <input type="text" id="nombre" placeholder="Nombre del Pokémon" required>
+        <button type="submit">Buscar</button>
+    </form>
+    <div id="resultado"></div>
+
+    <script>
+        function consultarPokemon(event) {
+            event.preventDefault();
+            const nombre = document.getElementById("nombre").value;
+            fetch(`/pokemon?nombre=${nombre}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("resultado").innerHTML = data.error;
+                    } else {
+                        document.getElementById("resultado").innerHTML = `
+                            <h2>${data.nombre}</h2>
+                            <p><strong>Altura:</strong> ${data.altura}</p>
+                            <p><strong>Peso:</strong> ${data.peso}</p>
+                            <img src="${data.imagen}" alt="${data.nombre}">
+                        `;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("resultado").innerHTML = "Error al consultar el Pokémon";
+                });
+        }
+    </script>
+</body>
+</html>
